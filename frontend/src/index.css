@@ -1,0 +1,196 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/oxanium";
+@import "@fontsource-variable/jetbrains-mono";
+
+@theme inline {
+  --font-sans: "Oxanium Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Oxanium Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-amber: var(--amber);
+  --color-panel: var(--panel);
+  --color-panel-raised: var(--panel-raised);
+
+  --color-rarity-common: var(--rarity-common);
+  --color-rarity-rare: var(--rarity-rare);
+  --color-rarity-epic: var(--rarity-epic);
+  --color-rarity-legendary: var(--rarity-legendary);
+
+  --color-platform-steam: var(--platform-steam);
+  --color-platform-playstation: var(--platform-playstation);
+  --color-platform-xbox: var(--platform-xbox);
+  --color-platform-switch: var(--platform-switch);
+  --color-platform-mobile: var(--platform-mobile);
+  --color-platform-pc: var(--platform-pc);
+  --color-platform-other: var(--platform-other);
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 8px;
+  --radius-3xl: 10px;
+  --radius-4xl: 12px;
+}
+
+/* Dark only: a save screen, not a document. */
+:root {
+  color-scheme: dark;
+
+  --background: oklch(0.13 0.018 268);
+  --foreground: oklch(0.95 0.012 105);
+  --panel: oklch(0.17 0.022 268);
+  --panel-raised: oklch(0.21 0.026 268);
+  --card: var(--panel);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.19 0.024 268);
+  --popover-foreground: var(--foreground);
+
+  /* Acid lime: the one loud colour. Used for value, focus and the primary action only. */
+  --primary: oklch(0.9 0.2 128);
+  --primary-foreground: oklch(0.16 0.03 128);
+  --amber: oklch(0.83 0.15 75);
+
+  --secondary: oklch(0.23 0.026 268);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.22 0.022 268);
+  --muted-foreground: oklch(0.7 0.025 265);
+  --accent: oklch(0.26 0.03 268);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.7 0.19 25);
+  --border: oklch(1 0 0 / 9%);
+  --input: oklch(1 0 0 / 13%);
+  --ring: oklch(0.9 0.2 128 / 70%);
+  --radius: 4px;
+
+  --rarity-common: oklch(0.72 0.02 265);
+  --rarity-rare: oklch(0.72 0.15 245);
+  --rarity-epic: oklch(0.7 0.2 305);
+  --rarity-legendary: oklch(0.84 0.16 80);
+
+  --platform-steam: oklch(0.72 0.11 235);
+  --platform-playstation: oklch(0.6 0.19 262);
+  --platform-xbox: oklch(0.74 0.2 145);
+  --platform-switch: oklch(0.66 0.22 22);
+  --platform-mobile: oklch(0.8 0.14 185);
+  --platform-pc: oklch(0.72 0.15 300);
+  --platform-other: oklch(0.65 0.02 265);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans antialiased;
+    font-feature-settings: "ss01";
+  }
+
+  body {
+    @apply min-h-dvh bg-background text-foreground;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, oklch(0.9 0.2 128 / 7%), transparent 60%),
+      linear-gradient(oklch(1 0 0 / 2.5%) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(1 0 0 / 2.5%) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      32px 32px,
+      32px 32px;
+    background-attachment: fixed;
+  }
+
+  /* CRT scanlines, faint enough to read through. */
+  body::after {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: repeating-linear-gradient(
+      to bottom,
+      oklch(0 0 0 / 0%) 0,
+      oklch(0 0 0 / 0%) 2px,
+      oklch(0 0 0 / 14%) 3px
+    );
+    mix-blend-mode: multiply;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+@layer components {
+  /* Panels have one cut corner instead of rounded ones, like a game HUD. */
+  .panel {
+    @apply relative bg-panel;
+    --cut: 14px;
+    --edge: var(--border);
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+    box-shadow: inset 0 0 0 1px var(--edge);
+  }
+
+  /* The clip-path removes the border along the cut, so draw that diagonal back in. */
+  .panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--cut);
+    height: var(--cut);
+    pointer-events: none;
+    background: linear-gradient(
+      to top right,
+      transparent calc(50% - 0.75px),
+      var(--edge) calc(50% - 0.75px),
+      var(--edge) calc(50% + 0.75px),
+      transparent calc(50% + 0.75px)
+    );
+  }
+
+  .panel-interactive:hover,
+  .panel-interactive:focus-within {
+    --edge: var(--primary);
+  }
+
+  .hud-label {
+    @apply font-mono text-[0.68rem] tracking-[0.18em] text-muted-foreground uppercase;
+  }
+
+  .numeric {
+    @apply font-mono tabular-nums;
+  }
+
+  .key-hint {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded-sm border border-border bg-background/60 px-1 font-mono text-[0.65rem] text-muted-foreground;
+  }
+}
